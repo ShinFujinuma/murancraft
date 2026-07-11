@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ムラクラ｜ゲームの外に、本物の村を。── 常設リアルフィールド</title>
+<meta name="description" content="ゲームの報酬構造をそのまま現実に移植！AI時代に価値が高まる一次産業・建設業の「本物の入口」を、長野の豊かな自然の中に常設されたフィールドで子どもたちに提供します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* --- ベーススタイル & 方眼紙グリッド背景の再現 --- */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    background-color: #F7F9F6;
+    background-image: 
+      linear-gradient(rgba(82, 115, 77, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(82, 115, 77, 0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #2C3E2B;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  h1, h2, h3, h4, .logo-text, .btn-primary, .btn-ghost, .eyebrow, .game-badge {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-weight: 700;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  section {
+    padding: 80px 0;
+    border-bottom: 1px solid #E1EBD5;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: #52734D;
+    background: #E5EDC8;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  section h2 {
+    font-size: 26px;
+    color: #1B2E1A;
+    margin-bottom: 16px;
+    position: relative;
+    padding-left: 14px;
+    border-left: 5px solid #52734D;
+    line-height: 1.3;
+  }
+
+  .section-desc {
+    font-size: 15px;
+    color: #556B53;
+    margin-bottom: 40px;
+    max-width: 720px;
+  }
+
+  /* --- ヘッダー --- */
+  header {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #E1EBD5;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-in {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo-text {
+    font-size: 17px;
+    color: #3B5238;
+    letter-spacing: 0.05em;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .logo-text small {
+    font-size: 9px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: #7C9A75;
+    font-weight: 600;
+  }
+
+  .header-cta {
+    background: #FE7139;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(254, 113, 57, 0.2);
+    white-space: nowrap;
+  }
+
+  .header-cta:hover {
+    background: #E65C25;
+  }
+
+  /* --- ヒーローエリア --- */
+  .hero {
+    position: relative;
+    padding: 40px 0;
+  }
+
+  .hero-in {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .hero-content h1 {
+    font-size: 32px;
+    line-height: 1.4;
+    color: #1B2E1A;
+    margin-bottom: 20px;
+    font-weight: 900;
+  }
+
+  .hero-content h1 em {
+    font-style: normal;
+    color: #FE7139;
+    background: linear-gradient(transparent 70%, #FFDFD2 70%);
+  }
+
+  .hero-content .lead {
+    font-size: 16px;
+    color: #41573F;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: #FE7139;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(254, 113, 57, 0.25);
+    display: inline-block;
+    text-align: center;
+    width: auto;
+  }
+
+  .btn-primary:hover {
+    background: #E65C25;
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: #FFF;
+    border: 2px solid #52734D;
+    color: #52734D;
+    padding: 12px 26px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .btn-ghost:hover {
+    background: #52734D;
+    color: #fff;
+  }
+
+  /* タイピング端末コンポーネント */
+  .codecard {
+    background: #1A2619;
+    border-radius: 12px;
+    width: 100%;
+    box-shadow: 0 15px 35px rgba(26, 38, 25, 0.2);
+    border: 2px solid #3B5238;
+    overflow: hidden;
+  }
+
+  .code-bar {
+    background: #253624;
+    padding: 10px 14px;
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid #3B5238;
+  }
+
+  .code-bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .code-bar span:nth-child(1) { background: #FF5F56; }
+  .code-bar span:nth-child(2) { background: #FFBD2E; }
+  .code-bar span:nth-child(3) { background: #27C93F; }
+
+  .code-body {
+    padding: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #A3CEA1;
+    min-height: 260px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.6;
+  }
+
+  .code-body .soft { color: #61885F; }
+  .code-body .keyword { color: #FF9D66; }
+  .code-body .string { color: #B5E853; }
+  .code-body .highlight { color: #FFEB95; font-weight: bold; }
+  
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: #A3CEA1;
+    margin-left: 2px;
+    animation: blink 0.8s infinite;
+    vertical-align: middle;
+  }
+  @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+  /* --- コンセプト大枠 --- */
+  .concept-banner {
+    background: #FFF;
+    border: 1px solid #E1EBD5;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 10px 35px rgba(82, 115, 77, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-top: 20px;
+  }
+
+  .concept-badge {
+    background: linear-gradient(135deg, #52734D 0%, #3B5238 100%);
+    color: #FFF;
+    padding: 24px 16px;
+    border-radius: 16px;
+    text-align: center;
+    min-width: 200px;
+  }
+
+  .concept-badge span {
+    font-size: 12px;
+    opacity: 0.8;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .concept-badge h3 {
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .concept-text h3 {
+    font-size: 20px;
+    color: #1B2E1A;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .concept-text p {
+    color: #4A5F48;
+    font-size: 15px;
+  }
+
+  /* --- ゲームUI風グリッド再現（システムセクション） --- */
+  .game-ui-section {
+    background: #FFF;
+  }
+
+  .ui-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .ui-card {
+    background: #FDFEFC;
+    border: 2px solid #E1EBD5;
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.01);
+    margin-top: 12px;
+  }
+
+  .game-badge {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: #3B5238;
+    color: #FFF;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 3px 12px;
+    border-radius: 5px;
+    letter-spacing: 0.05em;
+  }
+
+  .ui-card.orange-theme .game-badge { background: #FE7139; }
+  .ui-card.orange-theme { border-color: #FFDFD2; }
+
+  .ui-card h3 {
+    font-size: 18px;
+    color: #1B2E1A;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .ui-sub {
+    font-size: 12px;
+    font-weight: 700;
+    color: #FE7139;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .ui-card.green-theme .ui-sub { color: #52734D; }
+
+  .ui-card p {
+    font-size: 14px;
+    color: #556B53;
+  }
+
+  /* --- テーブル表示 --- */
+  .table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #E1EBD5;
+    border-radius: 12px;
+    margin-top: 32px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #FFF;
+    min-width: 500px;
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #E1EBD5;
+    text-align: left;
+  }
+
+  th {
+    background: #52734D;
+    color: #FFF;
+    font-weight: 700;
+  }
+
+  tr:nth-child(even) { background: #FBFDFA; }
+  td strong { color: #FE7139; }
+
+  /* --- 4つの科学的エビデンス条件 --- */
+  .evidence-section {
+    background: rgba(247, 249, 246, 0.6);
+  }
+
+  .evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .evidence-card {
+    background: #FFF;
+    border: 1px solid #D4E3CB;
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .evidence-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #52734D;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .evidence-card h4 {
+    font-size: 15px;
+    color: #1B2E1A;
+    margin-bottom: 10px;
+  }
+
+  .evidence-card p {
+    font-size: 13px;
+    color: #61755F;
+    line-height: 1.6;
+  }
+
+  .matrix-box {
+    background: linear-gradient(135deg, #3B5238 0%, #1A2619 100%);
+    color: #FFF;
+    border-radius: 16px;
+    padding: 32px 20px;
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .matrix-tag {
+    background: #FE7139;
+    color: #FFF;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 30px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .matrix-box h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 900;
+  }
+
+  .matrix-box p {
+    font-size: 14px;
+    opacity: 0.85;
+  }
+
+  /* --- キャリア＆地域セクション --- */
+  .career-section {
+    background: #FFF;
+  }
+
+  .two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .column-card {
+    background: #FBFDFA;
+    border: 1px solid #E1EBD5;
+    border-radius: 16px;
+    padding: 28px 20px;
+  }
+
+  .column-card h3 {
+    font-size: 18px;
+    color: #1B2E1A;
+    margin-bottom: 16px;
+  }
+
+  .column-card ul {
+    list-style: none;
+  }
+
+  .column-card li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: #3B5238;
+  }
+
+  .column-card li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: #FE7139;
+    font-weight: bold;
+  }
+
+  /* --- 価格システム --- */
+  .pricing-section {
+    background: rgba(247, 249, 246, 0.5);
+  }
+
+  .price-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .price-mobile-card {
+    background: #FFF;
+    border: 1px solid #E1EBD5;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+  }
+
+  .price-mobile-card.featured-card {
+    border: 2px solid #FE7139;
+    position: relative;
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .layer-tag {
+    font-size: 11px;
+    background: #E5EDC8;
+    color: #52734D;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .price-mobile-card.featured-card .layer-tag {
+    background: #FFDFD2;
+    color: #FE7139;
+  }
+
+  .p-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1B2E1A;
+  }
+
+  .p-cost {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: #FE7139;
+    margin: 8px 0;
+  }
+
+  .p-cost small {
+    font-size: 12px;
+    color: #2C3E2B;
+    font-weight: 500;
+  }
+
+  .p-role {
+    font-size: 13px;
+    color: #556B53;
+    line-height: 1.5;
+    border-top: 1px dashed #E1EBD5;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+
+  /* --- 最終CTA & フッター --- */
+  .final-cta {
+    background: linear-gradient(135deg, #3B5238 0%, #1A2619 100%);
+    color: #FFF;
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .final-cta h2 {
+    font-size: 26px;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .final-cta p {
+    font-size: 15px;
+    opacity: 0.85;
+    margin-bottom: 32px;
+  }
+
+  footer {
+    background: #111A10;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  footer .name {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 17px;
+    color: #FFF;
+    margin-bottom: 6px;
+  }
+
+  /* --- スマートフォン対応（レスポンシブメディアクエリ） --- */
+  @media(max-width: 850px) {
+    .hero-in {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .concept-banner {
+      flex-direction: column;
+      text-align: center;
+      padding: 24px;
+    }
+    .concept-badge {
+      width: 100%;
+    }
+    .two-column {
+      grid-template-columns: 1fr;
+    }
+    .cta-row .btn-primary, .cta-row .btn-ghost {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-in">
+    <div class="logo">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="19" r="13" fill="#52734D"/>
+        <circle cx="14" cy="24" r="9" fill="#9BC498"/>
+        <circle cx="34" cy="24" r="9" fill="#9BC498"/>
+        <rect x="22" y="28" width="4" height="12" rx="2" fill="#8A6A4F"/>
+        <text x="24" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="700" fill="#fff">{ }</text>
+      </svg>
+      <div class="logo-text">
+        <span>ムラクラ</span>
+        <small>MURA CRAFT FIELD</small>
+      </div>
+    </div>
+    <a class="header-cta" href="#join">体験会へ</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-in">
+    <div class="hero-content">
+      <p class="eyebrow">松本・長野常設フィールド</p>
+      <p class="lead">子どもたちが主役になってゼロから「村づくり」を体験するリアルタイム体験型</p>
+      <div class="cta-row">
+        <a class="btn-primary" href="#join">無料の現地体験会に申し込む</a>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <div class="codecard">
+        <div class="code-bar"><span></span><span></span><span></span></div>
+        <div id="typewriter" class="code-body"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="wrap" style="padding-top: 20px;">
+  <div class="concept-banner">
+    <div class="concept-badge">
+      <span>コア・コンセプト</span>
+      <h3>現実を拡張する遊び</h3>
+    </div>
+    <div class="concept-text">
+      <h3>ゲームを取り上げるのではない。「より面白い現実」を提示する。</h3>
+      <p>「早くゲームをやめなさい！」と禁止・規制しても効果はありません。画面の中で発揮されている圧倒的な〈集中力〉や〈熱中力〉を、信州の広大なリアルフィールドで発揮する。それが「ムラクラ」の没入型自然体験です。</p>
+    </div>
+  </div>
+</section>
+
+<section id="system" class="game-ui-section">
+  <div class="wrap">
+    <p class="eyebrow">GAMIFICATION SYSTEM</p>
+    <h2>ゲームの体験をリアルで再現する</h2>
+    <p class="section-desc">子どもが夢中になるオンラインゲームのループ構造を解析し、全く同じ体験価値を持つリアルな代替アクティビティを設計しました。</p>
+    
+    <div class="ui-grid">
+      <div class="ui-card orange-theme">
+        <span class="game-badge">QUEST BOARD</span>
+        <h3>ギルド掲示板の「しごと」</h3>
+        <span class="ui-sub">【対応物：クエスト・タスク】</span>
+        <p>小屋づくり、畑の開墾、林業、インフラ整備など、リアルな村づくりのタスクが掲示。子どもは自分の意志で自由に仕事を選択し、主体的に動き出します。</p>
+      </div>
+      <div class="ui-card orange-theme">
+        <span class="game-badge">EXP & GOLD</span>
+        <h3>村内通貨・スキルバッジ</h3>
+        <span class="ui-sub">【対応物：経験値・ゴールド】</span>
+        <p>「しごと」を達成すると、村内限定で使える独自の通貨や、技術を証明するバッジを付与。手に入れた通貨で、村での食事や特別な道具をレンタルできます。</p>
+      </div>
+      <div class="ui-card green-theme">
+        <span class="game-badge">CRAFT / BUILD</span>
+        <h3>小屋づくり・工作・インフラ</h3>
+        <span class="ui-sub">【対応物：建築・クラフト】</span>
+        <p>本物の工具を使い、職人に教わりながらログハウスや拠点をみんなの手で組み上げていきます。3Dの画面を飛び越えた、リアルな空間構築です。</p>
+      </div>
+      <div class="ui-card green-theme">
+        <span class="game-badge">HARVEST / BREED</span>
+        <h3>リアルな農業・園芸・狩猟</h3>
+        <span class="ui-sub">【対応物：収穫・育成】</span>
+        <p>土を耕し、作物を育て、時には猟師の背中を追う。「獲る・育てる」という生命に直結した一次産業のプロセスを、身体性を伴う遊びとして体感します。</p>
+      </div>
+      <div class="ui-card">
+        <span class="game-badge">SAVE DATA</span>
+        <h3>「続きが気になる」セーブ構造</h3>
+        <span class="ui-sub">【対応物：セーブデータ】</span>
+        <p>「自分が途中まで組み立てたあの壁の続きを作りたい」「植えた作物の成長が気になる」── ゲームのセーブデータのように、次も絶対に来たくなる未完の誘惑を組み込んでいます。</p>
+      </div>
+      <div class="ui-card">
+        <span class="game-badge">GUILD / NPC</span>
+        <h3>異年齢コミュニティとNPCおじさん</h3>
+        <span class="ui-sub">【対応物：ギルド・憧れの上位プレイヤー】</span>
+        <p>同じ現場に集まる異年齢の仲間（村人）と、圧倒的なプロの技術を魅せるかっこいい地域の職人たち（NPC）が、子どもの新しい憧れの対象となります。</p>
+      </div>
+    </div>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>ムラクラでの対応リアル体験例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>クエスト・タスク</td><td><strong>ギルド掲示板の「しごと」</strong></td></tr>
+          <tr><td>経験値・ゴールド</td><td><strong>村内通貨・スキルバッジ</strong></td></tr>
+          <tr><td>建築・クラフト</td><td><strong>小屋づくり・工作・インフラ整備</strong></td></tr>
+          <tr><td>収穫・育成</td><td><strong>農業・園芸</strong></td></tr>
+          <tr><td>続きが気になる状態</td><td><strong>「小屋の完成」「作物の収穫」が待っている構造</strong></td></tr>
+          <tr><td>ギルド・パーティ</td><td><strong>村人仲間・異年齢の共同作業</strong></td></tr>
+          <tr><td>NPC・憧れの上位プレイヤー</td><td><strong>ヒーロー化された、本物の技を持つ「NPCおじさん」</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="evidence-section">
+  <div class="wrap">
+    <p class="eyebrow">SCIENTIFIC EVIDENCE</p>
+    <p class="section-desc">国内外の依存解決アプローチや環境研究から導き出されたエビデンス</p>
+    
+    <div class="evidence-grid">
+      <div class="evidence-card">
+        <span class="evidence-num">01. 禁止は効かない</span>
+        <h4>規制ではなく提示</h4>
+        <p>中国の厳格なゲーム規制下でも77%が名義回避している事実や、香川県条例の例が示す通り、禁止は根本解決になりません。より面白いリアルな世界を提示します。</p>
+      </div>
+      <div class="evidence-card">
+        <span class="evidence-num">02. 置き換えが効く</span>
+        <h4>報酬構造の完全移植</h4>
+        <p>韓国のネット依存回復キャンプ等で行われる代替活動設計。ムラクラは、ゲームで得ていた報酬（達成感・コミュニティ）をそっくりそのまま土の上に移植した徹底版です。</p>
+      </div>
+      <div class="evidence-card">
+        <span class="evidence-num">03. 自然環境そのものが効く</span>
+        <h4>丸ごと自然のフィールド</h4>
+        <p>米130地域研究等で「回復プログラムは緑の多い環境でのみ有効」「自然接触が多い子は依存度が低い」と立証済み。信州の豊かな自然環境そのものが持つ力を活かします。</p>
+      </div>
+      <div class="evidence-card">
+        <span class="evidence-num">04. 継続が効く</span>
+        <h4>常設の地域拠点</h4>
+        <p>単発のキャンプやアウトドア体験イベントは、その日が終われば元の生活に戻ります。ムラクラは「日常的に通える常設拠点」だからこそ、生活習慣の置き換えが定着します。</p>
+      </div>
+    </div>
+    
+    <div class="matrix-box">
+      <p>単なる週末の自然体験イベントでもなく、ゲームの単なる取り上げでもない。国内に存在しなかった独自のポジショニングに正面から着地し、子どもの生活を根本から変えるサードプレイスを提供します。</p>
+    </div>
+  </div>
+</section>
+
+<section class="career-section">
+  <div class="wrap">
+    <p class="eyebrow">FUTURE CAREER & REGION</p>
+    <h2>AI時代に必要な「強み」と、地域の未来を育てる</h2>
+    <div class="two-column">
+      <div class="column-card">
+        <h3>親御さんへのメッセージ</h3>
+        <p style="font-size: 13px; color: #556B53; margin-bottom: 16px;">AIがホワイトカラーのデスクワークを代替していく時代、手と体、自然を相手にする一次産業・建設業の価値は相対的に高まります。</p>
+        <ul>
+          <li><strong>キャリア教育としての価値：</strong>「ゲームをやめさせたい」という守りの動機だけでなく、「将来の選択肢を広げてあげたい」という攻めの動機を満たします。</li>
+          <li><strong>進路の選択肢を増やす：</strong>木を伐る、家を建てる。本物の入口をかっこいい大人から直接教わることで、子どもの世界がダイナミックに広がります。</li>
+        </ul>
+      </div>
+      
+      <div class="column-card">
+        <h3>地域の「NPCおじさん」ヒーロー化</h3>
+        <p style="font-size: 13px; color: #556B53; margin-bottom: 16px;">担い手不足に悩む地域の一次産業を、子ども時代からのファンと未来の入職者を育てる循環装置へと変貌させます。</p>
+        <ul>
+          <li><strong>圧倒的な職人技のショー：</strong>チェーンソーの伐倒やプロの鉋がけを「見せ場」として演出。職人たちを魅力的にキャラクター化します。</li>
+          <li><strong>地域への貢献と還元：</strong>YouTubeメディアミックスを通じて家でも「推しNPC」を追いかけ、次回の来村、そして将来の弟子入り気分へと繋げます。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="pricing-section">
+  <div class="wrap">
+    <p class="eyebrow">PRICE PLAN</p>
+    <h2>料金プラン</h2>
+    
+    <div class="price-list">
+      <div class="price-mobile-card featured-card">
+        <div class="card-meta">
+          <small style="color:#FE7139; font-weight:700; font-size:11px;">★通い放題</small>
+        </div>
+        <div class="p-name">月額村民パス</div>
+        <div class="p-cost">9,800円<small> / 月 (税込)</small></div>
+        <div class="p-role">松本・長野都市圏ファミリー向け。毎週末の習い事の代替。</div>
+      </div>
+      <div class="price-mobile-card">
+        <div class="card-meta">
+        </div>
+        <div class="p-name">年間パス</div>
+        <div class="p-cost">98,000円<small> / 年 (税込)</small></div>
+        <div class="p-role">月額換算で約8,167円相当。村の四季の全クエスト・収穫・建築を網羅。</div>
+      </div>
+      <div class="price-mobile-card">
+        <div class="card-meta">
+          <small style="color:#556B53; font-size:11px;">週末・長期休みの来訪</small>
+        </div>
+        <div class="p-name">1DAY村民ビザ</div>
+        <div class="p-cost">子ども 4,900円<small> / 日 (税込)</small></div>
+        <p style="font-size:12px; color:#2C3E2B; margin-top:-4px; margin-bottom:6px;">※同伴大人：1,500円/日</p>
+        <div class="p-role">首都圏・遠方からの来訪用。村内通貨500円分チケット付き。</div>
+      </div>
+      <div class="price-mobile-card">
+        <div class="card-meta">
+          <span class="layer-tag">単発参加</span>
+        </div>
+        <div class="p-name">回数券（5回分）</div>
+        <div class="p-cost">19,800円<small> (税込)</small></div>
+        <div class="p-role">1回あたり3,960円。</div>
+      </div>
+      <div class="price-mobile-card">
+        <div class="card-meta">
+          <span class="layer-tag">オンラインでの参加</span>
+          <small style="color:#556B53; font-size:11px;">「自分の村」を遠隔で持つ</small>
+        </div>
+        <div class="p-name">ふるさと村民（オンライン）</div>
+        <div class="p-cost">1,000円<small> / 月 (税込)</small></div>
+        <div class="p-role">YouTube限定配信＋年2回の収穫物頒布＋リアル来村時のビザ割引。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="join" class="final-cta">
+  <div class="wrap">
+    <p class="eyebrow" style="background:#3B5238; color:#fff; margin-bottom:12px;">JOIN VILLAGE</p>
+    <p>画面の中の夢中を、本物の夢中へ。まずは無料の現地体験会・説明会へお越しください。</p>
+    <a class="btn-primary" href="#join" style="font-size: 16px; padding: 16px 36px; width:100%; max-width:340px;">無料の現地体験会に申し込む</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="name">ムラクラ</p>
+    <p style="margin-bottom: 4px;">運営チーム：KIDS ENJOY</p>
+    <p>長野県松本市・中山間地域遊休地 常設フィールド</p>
+    <p style="margin-top:24px; opacity:.4; font-size:10px;">© 2026 KIDS ENJOY & ムラクラ. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const textLines = [
+    { text: "// ゲームの圧倒的な熱量をリアルな土へ", color: "soft" },
+    { text: "import { MuraCraft } from 'nagano_nature';", color: "keyword" },
+    { text: "", color: "" },
+    { text: "const childStatus = {", color: "text" },
+    { text: "  interest: '画面の中から飛び出す',", color: "string" },
+    { text: "  energy: '圧倒的な没入感と集中力',", color: "string" },
+    { text: "  field: '長野の土の上へ'", color: "string" },
+    { text: "};", color: "text" },
+    { text: "", color: "" },
+    { text: "function startMuraCra(child) {", color: "keyword" },
+    { text: "  return 'の獲得！';", color: "highlight" },
+    { text: "}", color: "keyword" }
+  ];
+
+  const container = document.getElementById('typewriter');
+  let lineIndex = 0;
+  let charIndex = 0;
+  let currentDiv = null;
+
+  function type() {
+    if (lineIndex < textLines.length) {
+      const currentLine = textLines[lineIndex];
+      
+      if (charIndex === 0) {
+        currentDiv = document.createElement('div');
+        if (currentLine.color) {
+          currentDiv.className = currentLine.color;
+        }
+        container.appendChild(currentDiv);
+        
+        if (currentLine.text === "") {
+          currentDiv.innerHTML = "&nbsp;";
+          lineIndex++;
+          setTimeout(type, 80);
+          return;
+        }
+      }
+
+      if (charIndex < currentLine.text.length) {
+        if (currentLine.text[charIndex] === " ") {
+          currentDiv.innerHTML += "&nbsp;";
+        } else {
+          currentDiv.innerText += currentLine.text[charIndex];
+        }
+        charIndex++;
+        setTimeout(type, 30);
+      } else {
+        lineIndex++;
+        charIndex = 0;
+        setTimeout(type, 120);
+      }
+    } else {
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      container.appendChild(cursor);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(type, 400);
+  });
+</script>
+
+</body>
+</html>
